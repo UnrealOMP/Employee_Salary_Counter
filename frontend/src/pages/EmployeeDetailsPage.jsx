@@ -25,6 +25,11 @@ export function EmployeeDetailsPage() {
       setLoading(true);
       setError(null);
       try {
+        const isInitialized = sessionStorage.getItem('payrollInitialized');
+        if (!isInitialized) {
+          await payrollService.resetPayroll();
+          sessionStorage.setItem('payrollInitialized', 'true');
+        }
         const [empData, attData] = await Promise.all([
           payrollService.getEmployeePayroll(employeeId),
           payrollService.getEmployeeAttendance(employeeId),

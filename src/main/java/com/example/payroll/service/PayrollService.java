@@ -141,6 +141,19 @@ public class PayrollService {
     }
 
     /**
+     * Resets all in-memory payroll state including current summary and employee maps.
+     *
+     * @return empty PayrollSummary object
+     */
+    public PayrollSummary resetPayroll() {
+        log.info("Resetting all active in-memory payroll state...");
+        currentSummary.set(null);
+        employeePayrollMap.clear();
+        employeeAttendanceMap.clear();
+        return PayrollSummary.empty();
+    }
+
+    /**
      * Gets individual payroll result for an employee.
      *
      * @param employeeId target employee ID

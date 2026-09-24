@@ -79,4 +79,16 @@ class PayrollServiceTest {
         assertNotNull(summary.getEmployeeResults());
         assertEquals(0, summary.getEmployeeResults().size());
     }
+
+    @Test
+    @DisplayName("Verify resetPayroll clears all in-memory state and returns empty summary")
+    void testResetPayroll() {
+        PayrollSummary summary = payrollService.resetPayroll();
+        assertNotNull(summary);
+        assertEquals(0, summary.getTotalEmployees());
+        assertEquals(0, summary.getTotalAttendanceRecords());
+        assertNotNull(summary.getEmployeeResults());
+        assertEquals(0, summary.getEmployeeResults().size());
+    }
 }
+

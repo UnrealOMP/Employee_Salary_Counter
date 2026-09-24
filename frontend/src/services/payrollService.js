@@ -29,6 +29,17 @@ export const payrollService = {
   },
 
   /**
+   * Resets all in-memory payroll data on the backend.
+   *
+   * @returns {Promise<Object>} Empty PayrollSummary response.
+   */
+  async resetPayroll() {
+    const response = await api.delete('/payroll/reset');
+    return response.data;
+  },
+
+
+  /**
    * Fetches payroll breakdown for a specific employee.
    *
    * @param {string} employeeId - Target employee ID.

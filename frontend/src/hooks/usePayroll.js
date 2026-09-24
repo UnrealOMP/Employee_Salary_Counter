@@ -8,17 +8,23 @@ import { payrollService } from '../services/payrollService';
  */
 export function usePayroll() {
   const [summary, setSummary] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchPayroll = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await payrollService.getPayroll();
+      const isInitialized = sessionStorage.getItem('payrollInitialized');
+      let data;
+      if (!isInitialized) {
+        data = await payrollService.resetPayroll();
+        sessionStorage.setItem('payrollInitialized', 'true');
+      } else {
+        data = await payrollService.getPayroll();
+      }
       setSummary(data);
     } catch (err) {
-      // If 400 because no file uploaded yet, keep summary null without showing alarming error banner
       if (err.response && err.response.status === 400) {
         setSummary(null);
       } else {
@@ -35,6 +41,7 @@ export function usePayroll() {
     setError(null);
     try {
       const data = await payrollService.uploadPayroll(file);
+      sessionStorage.setItem('payrollInitialized', 'true');
       setSummary(data);
       return data;
     } catch (err) {

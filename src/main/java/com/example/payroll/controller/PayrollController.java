@@ -60,6 +60,18 @@ public class PayrollController {
     }
 
     /**
+     * Resets all in-memory payroll state and returns an empty PayrollSummary.
+     *
+     * @return ResponseEntity containing empty PayrollSummary
+     */
+    @DeleteMapping("/reset")
+    public ResponseEntity<PayrollSummary> resetPayroll() {
+        log.info("HTTP DELETE /api/v1/payroll/reset requested.");
+        PayrollSummary summary = payrollService.resetPayroll();
+        return ResponseEntity.ok(summary);
+    }
+
+    /**
      * Retrieves payroll calculation breakdown for a single employee.
      *
      * @param employeeId target employee ID
