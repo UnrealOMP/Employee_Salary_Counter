@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  preview: {
+    allowedHosts: ['employee-salary-counter-frontend.onrender.com'],
+  },
   server: {
     port: 3000,
     proxy: {
