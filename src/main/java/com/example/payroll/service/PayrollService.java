@@ -128,15 +128,14 @@ public class PayrollService {
     }
 
     /**
-     * Returns the active calculated PayrollSummary.
+     * Returns the active calculated PayrollSummary or an empty summary if no payroll has been processed yet.
      *
-     * @return current payroll summary
-     * @throws InvalidExcelException if no payroll has been processed yet
+     * @return current or empty payroll summary
      */
     public PayrollSummary getPayrollSummary() {
         PayrollSummary summary = currentSummary.get();
         if (summary == null) {
-            throw new InvalidExcelException("No monthly attendance file has been processed yet. Please upload an Excel attendance file.");
+            return PayrollSummary.empty();
         }
         return summary;
     }
@@ -149,7 +148,6 @@ public class PayrollService {
      * @throws EmployeeNotFoundException if employee ID does not exist
      */
     public PayrollResult getEmployeePayroll(String employeeId) {
-        getPayrollSummary(); // Ensure data exists
         PayrollResult result = employeePayrollMap.get(employeeId);
         if (result == null) {
             throw new EmployeeNotFoundException("Employee with ID '" + employeeId + "' was not found in active payroll data.");
@@ -165,7 +163,6 @@ public class PayrollService {
      * @throws EmployeeNotFoundException if employee ID does not exist
      */
     public List<AttendanceResult> getEmployeeAttendance(String employeeId) {
-        getPayrollSummary(); // Ensure data exists
         if (!employeePayrollMap.containsKey(employeeId)) {
             throw new EmployeeNotFoundException("Employee with ID '" + employeeId + "' was not found in active payroll data.");
         }

@@ -1,12 +1,35 @@
 package com.example.payroll.model;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Aggregated payroll response object summarizing monthly processing results across all employees.
  */
 public class PayrollSummary {
+
+    /**
+     * Creates an empty PayrollSummary instance representing the initial state before any Excel file is processed.
+     *
+     * @return empty PayrollSummary object
+     */
+    public static PayrollSummary empty() {
+        return new PayrollSummary(
+                null,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0.0,
+                BigDecimal.ZERO,
+                BigDecimal.ZERO,
+                BigDecimal.ZERO,
+                BigDecimal.ZERO,
+                Collections.emptyList()
+        );
+    }
 
     private final String payPeriod;
     private final int totalEmployees;

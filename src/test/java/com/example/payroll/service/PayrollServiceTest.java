@@ -68,4 +68,15 @@ class PayrollServiceTest {
         assertEquals("August 2026", summary.getPayPeriod());
         assertEquals(new BigDecimal("30000.00"), summary.getTotalNetSalary());
     }
+
+    @Test
+    @DisplayName("Verify getPayrollSummary returns empty summary when no file has been uploaded")
+    void testGetPayrollSummaryWhenNoUpload() {
+        PayrollSummary summary = payrollService.getPayrollSummary();
+        assertNotNull(summary);
+        assertEquals(0, summary.getTotalEmployees());
+        assertEquals(0, summary.getTotalAttendanceRecords());
+        assertNotNull(summary.getEmployeeResults());
+        assertEquals(0, summary.getEmployeeResults().size());
+    }
 }
