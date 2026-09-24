@@ -14,9 +14,6 @@ export const payrollService = {
     const formData = new FormData();
     formData.append('file', file);
     const response = await api.post('/payroll/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
     });
     return response.data;
   },
